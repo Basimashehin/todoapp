@@ -1,0 +1,78 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="container">
+     <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+        {%if messages%}
+        {%for m in messages%}
+         {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{m}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+             {% if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{m}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+        {%endfor%}
+        {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <h2>Welcome user {{request.user}}!!!</h2>
+<!--            <a href="{%url 'signout'%}">Logout</a>-->
+<!--            <a href="{%url 'add-todo'%}">AddToDo</a>-->
+<!--             <a href="{%url 'list-todo'%}">ListToDos</a>-->
+        </div>
+        <div class="col-4"></div>
+    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-4"></div>-->
+<!--        <div class="col-4">-->
+<!--            <h2>Pending Todos</h2>-->
+<!--            {%for t in Todos%}-->
+<!--           <div> {{t}}</div>-->
+<!--            {%endfor%}-->
+<!--        </div>-->
+<!--        <div class="col-4"></div>-->
+<!--    </div>-->
+     <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            {%if Todos%}
+            <table class="table">
+                <tr>
+                    <th>Task_name</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                 {%for todo in Todos%}
+                <tr>
+                    <td>{{todo.task_name}}</td>
+                    <td>{{todo.status}}</td>
+                    <td>{{todo.created_date}}</td>
+                    <td>
+                        <a href="{%url 'edit-todo' todo.id%}" class="btn btn-outline-warning">Edit</a>
+                        <a href="{%url 'todo-detail' todo.id%}" class="btn btn-outline-info">Detail</a>
+                        <a href="{%url 'remove-todo' todo.id%}" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </table>
+           {%else%}
+            <h2 class="text-danger">No ToDos</h2>
+            {%endif%}
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+{%endblock%}
